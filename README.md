@@ -1,7 +1,7 @@
-# Todo App in Javascript
-> A project to indicate my HTML, CSS and JavaScript skills
+# Todo App, focused on Vue frameword
+> A project to indicate my HTML, CSS, JavaScript and Vue skills
 
-Using HTML, CSS and JavaScript, we had to create a Single Page Application (SPA) that helps users to keep track of various tasks. 
+Using HTML, CSS and JavaScript, we should make effective use of Vue's Object-Oriented Programming system to build a Todo application. 
 
 ## Getting Started
 
