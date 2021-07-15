@@ -85,5 +85,8 @@ new Vue({
           this.item.date = e.target.innerText;
           e.target.blur();
       },
+      clearAll (){
+        this.todos = [];
+      }
   },
 });
