@@ -72,6 +72,14 @@ button {
   transition: 0.15s;
 }
 
+#clear {
+  background: #e69d5a;
+}
+
+#clear:hover {
+  background: #db7f29;
+}
+
 button:hover {
   background: #42aa7b;
 }
