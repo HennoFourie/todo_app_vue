@@ -26,15 +26,26 @@
                     <input v-model="newItem" @keyup.enter="addItem" placeholder="Add new todo" />
                     <button @click="addItem" :disabled="newItem.length === 0">Add</button>
                 </div>
+                <div class="flex">
+                    <button @click="">Sort A-Z</button>
+                    <button @click="">Sort By Importance</button>
+                    <button id="clear" @click="">Clear</button>
+                </div>
             </div>
             <div class="card">
                 <div class="card-inner">
                     <h2>Todo</h2>
                     <ul class="list">
-                        <li class="list-item" :class="{completed: item.completed}" v-for="item in reversedItems">
+                        <li class="list-item" :class="{completed: item.completed}" v-for="item in reversedTodos">
                             <div class="list-item-toggle" @click="toggleCompleted(item)"></div>
-                            <span>{{ item.date }} &nbsp</span>
-                            <span>{{ item.name }}</span>
+                            <span class="date" type="date"
+                            contenteditable="true"
+                            v-on:keydown.enter="updateDate($event, list)"
+                            v-on:blur="updateDate($event,list)">{{ item.date }} &nbsp</span>
+                            <span class="title"
+                            contenteditable="true"
+                            v-on:keydown.enter="updateTask($event, list)"
+                            v-on:blur="updateTask($event,list)">{{ item.name }}</span>
                             <div class="list-item-delete" @click="removeItem(item)">X</div>
                         </li>
                     </ul>
@@ -45,58 +56,6 @@
 
     <footer></footer>
 
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                newItem: '',
-                items: [
-                    {
-                        id: 1,
-                        name: 'Example 1',
-                        date: '2021-03-01',
-                        priority: true,
-                        completed: false,
-                    },
-                    {
-                        id: 2,
-                        name: 'Example 2',
-                        date: '2021-04-15',
-                        priority: false,
-                        completed: true,
-                    },
-                ],
-            },
-            computed: {
-                reversedItems() {
-                    return this.items.slice(0).reverse();
-                },
-            },
-            methods: {
-                addItem: function () {
-                    this.items.push({
-                        id: this.items.length + 1,
-                        name: this.newItem,
-                        date: this.newDate,
-                        priority: false,
-                        // Category: ['Work','Study','Personal'],
-                        completed: false,
-                    });
-                    this.newItem = '';
-                    this.newDate = '';
-                },
-                toggleCompleted: function (item) {
-                    item.completed = !item.completed;
-                },
-                changePriority: function (item) {
-                    item.priority = !item.priority;
-                },
-                removeItem: function (item) {
-                    this.items = this.items.filter((newItem) => newItem.name !== item.name);
-                },
-            },
-        });
-    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
