@@ -20,12 +20,12 @@
         <div id="app">
             <h1 class="">My Todo List</h1>
             <div class="card">
-                <div class="flex">
+                <div class="d-sm-flex">
                     <input type="date" v-model="newDate" />
                     <input v-model="newItem" @keyup.enter="addItem" placeholder="Add new todo" />
                     <button @click="addItem" :disabled="newItem.length === 0">Add</button>
                 </div>
-                <div class="flex">
+                <div class="d-sm-flex">
                     <button @click="sortDate">Sort By Date</button>
                     <button @click="sortAlpha">Sort A-Z</button>
                     <button @click="sortPriority">Sort By Importance</button>
@@ -36,19 +36,20 @@
                 <div class="card-inner">
                     <h2>Todo</h2>
                     <ul class="list">
-                        <li class="list-item" :class="{completed: item.completed}" v-for="item in reversedTodos">
+                        <li class="d-flex list-item" :class="{completed: item.completed}" v-for="item in reversedTodos">
                             <div class="list-item-toggle" @click="toggleCompleted(item)"></div>
-                            <span class="date" type="date" contenteditable="true"
+                            <div class="date" type="date" contenteditable="true"
                                 v-on:keydown.enter="updateDate($event, list)" v-on:blur="updateDate($event,list)">{{
-                                item.date }}</span>
-                            <span>&nbsp</span>
-                            <span class="title" contenteditable="true" v-on:blur="editTodo(item)">{{ item.name }}</span>
-                            <select is="category-select" v-model="item.category" :disabled="item.completed">
-                            </select>
-                            <span>&nbsp</span>
-                            <select is="priority-select" :class="['colored-bg-select']" v-model="item.priority"
-                                :disabled="item.completed">
-                            </select>
+                                item.date }}</div>
+                            <div>&nbsp</div>
+                            <div class="title" contenteditable="true" v-on:blur="editTodo(item)">{{ item.name }}</div>
+                            <div class="ml-auto p-2">
+                                <select is="category-select" v-model="item.category" :disabled="item.completed">
+                                </select>
+                                <select is="priority-select" :class="['colored-bg-select']" v-model="item.priority"
+                                    :disabled="item.completed">
+                                </select>
+                            </div>
                             <div class="list-item-delete" @click="removeItem(item)">X</div>
                         </li>
                     </ul>
