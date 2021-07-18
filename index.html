@@ -12,7 +12,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="css/stylesheet.css" type="text/css" rel="stylesheet">   
+    <link href="css/stylesheet.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
@@ -42,7 +42,7 @@
                                 v-on:keydown.enter="updateDate($event, list)" v-on:blur="updateDate($event,list)">{{
                                 item.date }}</div>
                             <div>&nbsp</div>
-                            <div class="title" contenteditable="true" v-on:blur="editTodo(item)">{{ item.name }}</div>
+                            <div class="title" contenteditable="true" @click="updateTodo(item)" v-on:blur="editTodo($event)">{{ item.name }}</div>
                             <div class="ml-auto p-2">
                                 <select is="category-select" v-model="item.category" :disabled="item.completed">
                                 </select>
