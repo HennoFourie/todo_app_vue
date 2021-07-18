@@ -12,8 +12,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="css/stylesheet.css" type="text/css" rel="stylesheet">
-    <script src="https://unpkg.com/vue"></script>
+    <link href="css/stylesheet.css" type="text/css" rel="stylesheet">   
 </head>
 
 <body>
@@ -22,13 +21,14 @@
             <h1 class="">My Todo List</h1>
             <div class="card">
                 <div class="flex">
-                    <input type="date" v-model="newDate"/>
+                    <input type="date" v-model="newDate" />
                     <input v-model="newItem" @keyup.enter="addItem" placeholder="Add new todo" />
                     <button @click="addItem" :disabled="newItem.length === 0">Add</button>
                 </div>
                 <div class="flex">
-                    <button @click="">Sort A-Z</button>
-                    <button @click="">Sort By Importance</button>
+                    <button @click="sortDate">Sort By Date</button>
+                    <button @click="sortAlpha">Sort A-Z</button>
+                    <button @click="sortPriority">Sort By Importance</button>
                     <button id="clear" @click="clearAll">Clear</button>
                 </div>
             </div>
@@ -38,14 +38,17 @@
                     <ul class="list">
                         <li class="list-item" :class="{completed: item.completed}" v-for="item in reversedTodos">
                             <div class="list-item-toggle" @click="toggleCompleted(item)"></div>
-                            <span class="date" type="date"
-                            contenteditable="true"
-                            v-on:keydown.enter="updateDate($event, list)"
-                            v-on:blur="updateDate($event,list)">{{ item.date }} &nbsp</span>
-                            <span class="title"
-                            contenteditable="true"
-                            v-on:keydown.enter="updateTask($event, list)"
-                            v-on:blur="updateTask($event,list)">{{ item.name }}</span>
+                            <span class="date" type="date" contenteditable="true"
+                                v-on:keydown.enter="updateDate($event, list)" v-on:blur="updateDate($event,list)">{{
+                                item.date }}</span>
+                            <span>&nbsp</span>
+                            <span class="title" contenteditable="true" v-on:blur="editTodo(item)">{{ item.name }}</span>
+                            <select is="category-select" v-model="item.category" :disabled="item.completed">
+                            </select>
+                            <span>&nbsp</span>
+                            <select is="priority-select" :class="['colored-bg-select']" v-model="item.priority"
+                                :disabled="item.completed">
+                            </select>
                             <div class="list-item-delete" @click="removeItem(item)">X</div>
                         </li>
                     </ul>
@@ -54,8 +57,11 @@
         </div>
     </div>
 
-    <footer></footer>
+    <footer class="info">
+        <p>Click to edit a todo</p>
+    </footer>
 
+    <script src="https://unpkg.com/vue"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

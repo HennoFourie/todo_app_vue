@@ -139,3 +139,11 @@ button:disabled {
   background: #4fc08d;
   border: #4fc08d;
 }
+
+.no-priority {
+  color: black;
+}
+
+.high-priority {
+  color: red;
+}
