@@ -79,26 +79,18 @@ Vue.component('priority-select', {
 Vue.component('category-select', {
   data: function () {
     return {
-      noCategrory: { type: Boolean, default: true },
-      isNotStart: { type: Boolean, default: false },
-      isInProgress: { type: Boolean, default: false },
-      isWaiting: { type: Boolean, default: false },
-      priorityOptions: [
+      categoryOptions: [
         {
-          'priority': 'None',
-          // 'class': 'no-priority'
+          'category': 'None',
         },
         {
-          'priority': 'Not Started',
-          // 'class': 'low-priority'
+          'category': 'Not Started',
         },
         {
-          'priority': 'In Progress',
-          // 'class': 'med-priority',
+          'category': 'In Progress',
         },
         {
-          'priority': 'Waiting',
-          // 'class': 'high-priority'
+          'category': 'Waiting',
         }
       ]
     }
@@ -118,29 +110,10 @@ Vue.component('category-select', {
   :value="value" 
   @input="$emit('input', $event.target.value)" 
   tabindex="0">
-      <option v-for="option in priorityOptions">
-      {{option.priority}}
+      <option v-for="option in categoryOptions">
+      {{option.category}}
       </option>
   </select>`,
-
-  // watch: {
-  //     value: function () {
-  //         this.setTextColor();
-  //     }
-  // },
-
-  // created: function () {
-  //     this.setTextColor();
-  // },
-
-  // methods: {
-  //     setTextColor() {
-  //         this.noPriority = this.value == "None" ? true : false;
-  //         this.isLow = this.value == "Low" ? true : false;
-  //         this.isMed = this.value == "Medium" ? true : false;
-  //         this.isHigh = this.value == "High" ? true : false;
-  //     },
-  // }
 });
 
 // app Vue instance
@@ -151,6 +124,7 @@ new Vue({
     todos: todoStorage.fetch(),
     newItem: '',
     newDate: null,
+    beforeEdit: null,
   },
   // watch todos change for localStorage persistence
   watch: {
@@ -187,25 +161,15 @@ new Vue({
     removeItem: function (item) {
       this.todos = this.todos.filter((newItem) => newItem.name !== item.name);
     },
-    editTodo: function (item) {
-      this.editedTodo = item;
-      this.editedTodoName = item.name;
-    },
     updateTodo: function (item) {
-      if (!this.editedTodo) {
-        return;
-      } else if (!item.text) {
-        this.removeItem(item);
-      }
-
-      this.editedTodo = null;
-      item.text = this.editedTodoName.trim();
+      return this.beforeEdit = item.id;
     },
-    // updateDate: function (e, item){
-    //     e.preventDefault();
-    //     this.item.date = e.target.innerText;
-    //     e.target.blur();
-    // },
+    editTodo: function (e) {
+        // this.editedTodo = e.target.innerText;
+        this.todos[this.beforeEdit].name = e.target.innerText;
+
+        this.beforeEdit = null;       
+    },
     sortDate() {
       this.todos.sort((a, b) => (a.date < b.date) ? 1 : -1)
     },
