@@ -74,6 +74,7 @@ button {
 
 #clear {
   background: #e69d5a;
+  margin-left: auto;
 }
 
 #clear:hover {
@@ -120,7 +121,7 @@ button:disabled {
 }
 
 .list-item-delete {
-  margin-left: auto;
+  /* margin-left: auto; */
   color: tomato;
   margin-top: -2px;
   font-weight: bold;
@@ -131,7 +132,7 @@ button:disabled {
   border: 1px solid #4fc08d;
 }
 
-.list-item.completed span {
+.list-item.completed {
   text-decoration: line-through;
 }
 
@@ -146,4 +147,12 @@ button:disabled {
 
 .high-priority {
   color: red;
+}
+
+#select {
+  margin-left: auto;
+}
+
+.info {
+  text-align: center;
 }
